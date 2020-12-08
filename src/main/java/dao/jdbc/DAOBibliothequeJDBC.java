@@ -10,6 +10,7 @@ import java.util.List;
 
 import dao.IDAOBibliotheque;
 import model.Album;
+import test.Visibilite;
 import model.*;
 
 public class DAOBibliothequeJDBC implements IDAOBibliotheque{

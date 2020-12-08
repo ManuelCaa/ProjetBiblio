@@ -2,6 +2,6 @@ package model;
 
 public enum Visibilite {
 	
-	Privé,Public,Followers;
+	Prive,Public,Followers;
 
 }

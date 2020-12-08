@@ -64,7 +64,7 @@ public class Bibliotheque {
 
 	@Override
 	public String toString() {
-		return "Bibliothèque [visibilite=" + visibilite + ", nom=" + nom + "]";
+		return "Bibliothï¿½que [visibilite=" + visibilite + ", nom=" + nom + "]";
 	}
 
 
