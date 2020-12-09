@@ -16,9 +16,12 @@ import model.Compte;
 import model.Followers;
 
 public class DAOFollowersJDBC implements IDAOFollowers{
-
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
 	
-	public void ajouter(Followers t) {
+	public void insert(Followers t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -39,7 +42,7 @@ public class DAOFollowersJDBC implements IDAOFollowers{
 	}
 
 	
-	public void modifier(Followers t) {
+	public void update(Followers t) {
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -62,7 +65,7 @@ public class DAOFollowersJDBC implements IDAOFollowers{
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void selectById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -96,7 +99,7 @@ public class DAOFollowersJDBC implements IDAOFollowers{
 			
 			while(rs.next()) 
 			{
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				f = new Followers(rs.getString("mail"), rs.getString("password"), rs.getString("pseudo"), b, 
 						rs.getInt("id"), rs.getInt("id_follower"), rs.getBoolean("rejectOrAcceptOption"));
 			}
@@ -111,7 +114,7 @@ public class DAOFollowersJDBC implements IDAOFollowers{
 	}
 
 	
-	public List<Followers> selectAll() {
+	public List<Followers> findAll() {
 		List<Followers> followers  = new ArrayList();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -125,7 +128,7 @@ public class DAOFollowersJDBC implements IDAOFollowers{
 			Followers f=null;
 			while(rs.next()) 
 			{
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				f = new Followers(rs.getString("mail"), rs.getString("password"), rs.getString("pseudo"), b, 
 						rs.getInt("id"), rs.getInt("id_follower"), rs.getBoolean("rejectOrAcceptOption"));
 				followers.add(f);

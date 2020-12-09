@@ -13,8 +13,11 @@ import model.Visibilite;
 
 public class DAOBibliothequeJDBC implements IDAOBibliotheque{
 
-	
-	public void ajouter(Bibliotheque t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Bibliotheque t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -34,7 +37,7 @@ public class DAOBibliothequeJDBC implements IDAOBibliotheque{
 	}
 
 	
-	public void modifier(Bibliotheque t) {
+	public void update(Bibliotheque t) {
 
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
@@ -59,7 +62,7 @@ public class DAOBibliothequeJDBC implements IDAOBibliotheque{
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void deleteById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -106,7 +109,7 @@ public class DAOBibliothequeJDBC implements IDAOBibliotheque{
 	}
 
 	
-	public List<Bibliotheque> selectAll() {
+	public List<Bibliotheque> findAll() {
 		List<Bibliotheque> bibliotheques  = new ArrayList();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

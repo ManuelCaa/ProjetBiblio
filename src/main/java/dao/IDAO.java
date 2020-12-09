@@ -3,16 +3,11 @@ package dao;
 import java.util.List;
 
 public interface IDAO <T,K> {
-
-		String lien="jdbc:mysql://localhost:3306/";
-		String db="bibliotheque";
-		String login="root";
-		String password="";
-		
-		
-		public void ajouter(T t);
-		public void modifier(T t);
-		public void supprimer(K id);
-		public T selectById(K id);
-		public List<T> selectAll();
+	
+	public T findById(K id);
+	public List<T> findAll();
+	public void insert(T objet);
+	public T update(T objet);
+	public void delete(T objet);
+	public void deleteById(K id);
 }

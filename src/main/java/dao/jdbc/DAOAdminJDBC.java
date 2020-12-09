@@ -9,12 +9,14 @@ import java.util.List;
 
 import dao.IDAOAdmin;
 import model.Admin;
-import model.Compte;
 
 public class DAOAdminJDBC implements IDAOAdmin {
 
-	
-	public void ajouter(Admin t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Admin t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -36,7 +38,7 @@ public class DAOAdminJDBC implements IDAOAdmin {
 	}
 
 	
-	public void modifier(Admin t) {
+	public void update(Admin t) {
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -59,7 +61,7 @@ public class DAOAdminJDBC implements IDAOAdmin {
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void deleteById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -103,9 +105,7 @@ public class DAOAdminJDBC implements IDAOAdmin {
 		}
 		return a;
 	}
-
-	
-	public List<Admin> selectAll() {
+	public List<Admin> findAll() {
 		List<Admin> admins  = new ArrayList();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -133,6 +133,7 @@ public class DAOAdminJDBC implements IDAOAdmin {
 		}
 		return admins;
 	}
+
 
 
 }

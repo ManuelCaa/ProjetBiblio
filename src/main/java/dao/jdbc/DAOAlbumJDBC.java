@@ -13,8 +13,11 @@ import model.Album;
 
 public class DAOAlbumJDBC implements IDAOAlbum {
 
-	 
-	public void ajouter(Album t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Album t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -36,7 +39,7 @@ public class DAOAlbumJDBC implements IDAOAlbum {
 	}
 
 	 
-	public void modifier(Album t) {
+	public void update(Album t) {
 		
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
@@ -61,7 +64,7 @@ public class DAOAlbumJDBC implements IDAOAlbum {
 	}
 
 	 
-	public void supprimer(Integer id) {
+	public void deleteById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -110,7 +113,7 @@ public class DAOAlbumJDBC implements IDAOAlbum {
 	}
 
 	 
-	public List<Album> selectAll() {
+	public List<Album> findAll() {
 		List<Album> albums  = new ArrayList();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

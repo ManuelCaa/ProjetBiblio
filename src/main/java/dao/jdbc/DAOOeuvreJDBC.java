@@ -15,8 +15,11 @@ import model.Oeuvre;
 
 public class DAOOeuvreJDBC implements IDAOOeuvre {
 
-	
-	public void ajouter(Oeuvre t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Oeuvre t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -44,7 +47,7 @@ public class DAOOeuvreJDBC implements IDAOOeuvre {
 	}
 
 	
-	public void modifier(Oeuvre t) {
+	public void update(Oeuvre t) {
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -76,7 +79,7 @@ public class DAOOeuvreJDBC implements IDAOOeuvre {
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void selectById(Integer id) {
 		try {
             Class.forName("com.mysql.jdbc.Driver");
 
@@ -125,7 +128,7 @@ public class DAOOeuvreJDBC implements IDAOOeuvre {
 	}
 
 	
-	public List<Oeuvre> selectAll() {
+	public List<Oeuvre> findAll() {
 
         List<Oeuvre> oeuvres  = new ArrayList();
         try {

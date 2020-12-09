@@ -15,8 +15,11 @@ import model.Utilisateur;
 
 public class DAOUtilisateurJDBC implements IDAOUtilisateur{
 
-	
-	public void ajouter(Utilisateur t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Utilisateur t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -39,7 +42,7 @@ public class DAOUtilisateurJDBC implements IDAOUtilisateur{
 	}
 
 	
-	public void modifier(Utilisateur t) {
+	public void update(Utilisateur t) {
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -62,7 +65,7 @@ public class DAOUtilisateurJDBC implements IDAOUtilisateur{
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void selectById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -95,7 +98,7 @@ public class DAOUtilisateurJDBC implements IDAOUtilisateur{
 			
 			while(rs.next()) 
 			{
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				u = new Utilisateur(rs.getString("mail"),rs.getString("password"),rs.getString("pseudo"),b);
 			}
 			
@@ -109,7 +112,7 @@ public class DAOUtilisateurJDBC implements IDAOUtilisateur{
 	}
 
 	
-	public List<Utilisateur> selectAll() {
+	public List<Utilisateur> findAll() {
 		List<Utilisateur> utilisateurs  = new ArrayList();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -123,7 +126,7 @@ public class DAOUtilisateurJDBC implements IDAOUtilisateur{
 			Utilisateur u=null;
 			while(rs.next()) 
 			{
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				u = new Utilisateur(rs.getString("mail"),rs.getString("password"),rs.getString("pseudo"),b);
 				utilisateurs.add(u);
 			}

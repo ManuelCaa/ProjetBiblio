@@ -15,8 +15,11 @@ import model.Following;
 
 public class DAOFollowingJDBC implements IDAOFollowing{
 
-	
-	public void ajouter(Following t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Following t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -37,7 +40,7 @@ public class DAOFollowingJDBC implements IDAOFollowing{
 	}
 
 	
-	public void modifier(Following t) {
+	public void update(Following t) {
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -60,7 +63,7 @@ public class DAOFollowingJDBC implements IDAOFollowing{
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void selectById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -94,7 +97,7 @@ public class DAOFollowingJDBC implements IDAOFollowing{
 			
 			while(rs.next()) 
 			{
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				f = new Following(rs.getString("mail"), rs.getString("password"), rs.getString("pseudo"), b, 
 						rs.getInt("id"), rs.getInt("id_following"), rs.getBoolean("rejectOrAcceptOption"));
 			}
@@ -109,7 +112,7 @@ public class DAOFollowingJDBC implements IDAOFollowing{
 	}
 
 	
-	public List<Following> selectAll() {
+	public List<Following> findAll() {
 		List<Following> followings  = new ArrayList();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -123,7 +126,7 @@ public class DAOFollowingJDBC implements IDAOFollowing{
 			Following f=null;
 			while(rs.next()) 
 			{
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				f = new Following(rs.getString("mail"), rs.getString("password"), rs.getString("pseudo"), b, 
 						rs.getInt("id"), rs.getInt("id_following"), rs.getBoolean("rejectOrAcceptOption"));	
 				followings.add(f);

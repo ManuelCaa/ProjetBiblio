@@ -14,8 +14,11 @@ import model.Compte;
 
 public class DAOCompteJDBC implements IDAOCompte {
 
-	
-	public void ajouter(Compte t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Compte t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -38,7 +41,7 @@ public class DAOCompteJDBC implements IDAOCompte {
 	}
 
 	
-	public void modifier(Compte t) {
+	public void update(Compte t) {
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -62,7 +65,7 @@ public class DAOCompteJDBC implements IDAOCompte {
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void selectById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -109,7 +112,7 @@ public class DAOCompteJDBC implements IDAOCompte {
 	}
 
 	
-	public List<Compte> selectAll() {
+	public List<Compte> findAll() {
 		List<Compte> comptes  = new ArrayList();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

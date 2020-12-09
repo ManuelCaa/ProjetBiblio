@@ -16,8 +16,11 @@ import model.Oeuvre;
 
 public class DAOFicheJDBC implements IDAOFiche{
 
-	
-	public void ajouter(Fiche t) {
+	String lien="jdbc:mysql://localhost:3306/";
+	String db="bibliotheque";
+	String login="root";
+	String password="";
+	public void insert(Fiche t) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -50,7 +53,7 @@ public class DAOFicheJDBC implements IDAOFiche{
 	}
 
 	
-	public void modifier(Fiche t) {
+	public void update(Fiche t) {
 		
 		try {	
 			Class.forName("com.mysql.jdbc.Driver");
@@ -86,7 +89,7 @@ public class DAOFicheJDBC implements IDAOFiche{
 	}
 
 	
-	public void supprimer(Integer id) {
+	public void selectById(Integer id) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
@@ -119,8 +122,8 @@ public class DAOFicheJDBC implements IDAOFiche{
 			
 			while(rs.next()) 
 			{
-				Oeuvre o = Context.getInstance().getDaoOeuvre().selectById(rs.getInt("oeuvreId"));
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Oeuvre o = Context.getInstance().getDaoOeuvre().findById(rs.getInt("oeuvreId"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				f=new Fiche(rs.getInt("note"), rs.getString("pretee"),rs.getInt("luVisionnee"),rs.getString("avis"), rs.getInt("duree"), LocalDate.parse(rs.getString("creeA")), LocalDate.parse(rs.getString("modifieA")),o,b);		
 			}
 			
@@ -134,7 +137,7 @@ public class DAOFicheJDBC implements IDAOFiche{
 	}
 
 	
-	public List<Fiche> selectAll() {
+	public List<Fiche> findAll() {
 		
 		List<Fiche> fiches  = new ArrayList();
 		
@@ -150,8 +153,8 @@ public class DAOFicheJDBC implements IDAOFiche{
 			Fiche f=null;
 			while(rs.next()) 
 			{
-				Oeuvre o = Context.getInstance().getDaoOeuvre().selectById(rs.getInt("oeuvreId"));
-				Bibliotheque b = Context.getInstance().getDaoBibliotheque().selectById(rs.getInt("idBiblio"));
+				Oeuvre o = Context.getInstance().getDaoOeuvre().findById(rs.getInt("oeuvreId"));
+				Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(rs.getInt("idBiblio"));
 				f=new Fiche(rs.getInt("note"), rs.getString("pretee"),rs.getInt("luVisionnee"),rs.getString("avis"), rs.getInt("duree"), LocalDate.parse(rs.getString("creeA")), LocalDate.parse(rs.getString("modifieA")), o,b);		
 				fiches.add(f);
 			}

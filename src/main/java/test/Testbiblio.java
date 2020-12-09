@@ -10,6 +10,7 @@ import model.*;
 import config.Context;
 
 public class Testbiblio {
+	/*
 	static Compte connected=null;
 	public static List<Compte> comptes=new ArrayList<Compte>();
 
@@ -57,13 +58,13 @@ public class Testbiblio {
 			menuAcceuil();
 		}
 	}*/
-
+/*
 	private static void menuAdmin() {
 		System.out.println("Bienvenue dans le menu Admin");
 		System.out.println("Choix du menu :");
 		System.out.println("1 - Voir ma bibliotheque");
 		System.out.println("2 - Gestion de ma bibliotheque");
-		System.out.println("3 - Gerer la base de données de l'application");//ajout ou supprime une oeuvre
+		System.out.println("3 - Gerer la base de donnï¿½es de l'application");//ajout ou supprime une oeuvre
 		System.out.println("4 - Voir toutes les oeuvres");
 		System.out.println("5 - Mes amis");
 		System.out.println("6 - Mes Followers");
@@ -107,7 +108,7 @@ public class Testbiblio {
 
 	private static void validOeuvre() {
 		// TODO Auto-generated method stub
-		// validation en attente, des oeuvres proposées par les utilisateurs
+		// validation en attente, des oeuvres proposï¿½es par les utilisateurs
 	}
 
 	private static void addOeuvre() {
@@ -115,23 +116,23 @@ public class Testbiblio {
 		String titre=saisieString("Saisir le titre");
 		String descriptif=saisieString("Saisir descriptif");
 		String nomFichierImage=saisieString("Saisir image");
-		int annee=saisieInt("Saisir l'année de creation de l'oeuvre (yyyy)");
+		int annee=saisieInt("Saisir l'annï¿½e de creation de l'oeuvre (yyyy)");
 		String editeur=saisieString("Saisir l'editeur de l'oeuvre");
 		LocalDate creeA=LocalDate.now();
 		LocalDate modifieeA=LocalDate.now();
 		boolean moderationEffectuee= true;
 		
 		Oeuvre o = new Oeuvre(titre, descriptif, nomFichierImage, annee, editeur, creeA,modifieeA,true);
-		Context.getInstance().getDaoOeuvre().ajouter(o);
+		Context.getInstance().getDaoOeuvre().insert(o);
 
 	}
 
 	private static void deleteOeuvre() {
-		for(Oeuvre o : Context.getInstance().getDaoOeuvre().selectAll()) {
+		for(Oeuvre o : Context.getInstance().getDaoOeuvre().findAll()) {
 			System.out.println(o);
 		}
-		int choix=saisieInt("Choisir une oeuvre à supprimer de la base de donnée");
-		Context.getInstance().getDaoOeuvre().supprimer(choix);
+		int choix=saisieInt("Choisir une oeuvre ï¿½ supprimer de la base de donnï¿½e");
+		Context.getInstance().getDaoOeuvre().delete(choix);
 
 		
 	}
@@ -140,14 +141,14 @@ public class Testbiblio {
 		showOeuvre();
 	
 		int choix=saisieInt("Choisir une Oeuvre (id)");
-		Oeuvre o = Context.getInstance().getDaoOeuvre().selectById(choix);
+		Oeuvre o = Context.getInstance().getDaoOeuvre().findById(choix);
 		if(o==null) {System.out.println("Aucune Oeuvre avec ce numero");}
 		else 
 		{
 		String titre=saisieString("Saisir le titre");
 		String descriptif=saisieString("Saisir descriptif");
 		String nomFichierImage=saisieString("Saisir image");
-		int annee=saisieInt("Saisir l'année de creation de l'oeuvre (yyyy)");
+		int annee=saisieInt("Saisir l'annï¿½e de creation de l'oeuvre (yyyy)");
 		String editeur=saisieString("Saisir l'editeur de l'oeuvre");
 		LocalDate modifieeA=LocalDate.now();
 		
@@ -158,7 +159,7 @@ public class Testbiblio {
 		o.setEditeur(editeur);
 		o.setModifieeA(modifieeA);
 		
-		Context.getInstance().getDaoOeuvre().modifier(o);
+		Context.getInstance().getDaoOeuvre().update(o);
 	}
 	}
 	private static void menu() {
@@ -188,7 +189,7 @@ public class Testbiblio {
 	private static void showBiblio() {
 		System.out.println("Votre biblio");
 
-		for(Bibliotheque b : Context.getInstance().getDaoBibliotheque().selectAll()) {
+		for(Bibliotheque b : Context.getInstance().getDaoBibliotheque().findAll()) {
 			System.out.println(b);
 		}
 	}
@@ -196,7 +197,7 @@ public class Testbiblio {
 	private static void gestionMabiblio() {
 		System.out.println("Gestion de votre biblio");
 		System.out.println("Choix du menu :");
-		System.out.println("1 - Ajouter une oeuvre à ma biblio");
+		System.out.println("1 - Ajouter une oeuvre ï¿½ ma biblio");
 		System.out.println("2 - Supprimer une oeuvre de ma biblio");
 		System.out.println("3 - Modifier la fiche d'une oeuvre de ma biblio");
 		System.out.println("4 - Proposer une oeuvre");
@@ -216,7 +217,7 @@ public class Testbiblio {
 		
 	}
 	private static void showOeuvre() {
-		for(Oeuvre o : Context.getInstance().getDaoOeuvre().selectAll()) {
+		for(Oeuvre o : Context.getInstance().getDaoOeuvre().findAll()) {
 			System.out.println(o);
 		}
 	}
@@ -226,37 +227,37 @@ public class Testbiblio {
 		
 		int choix=saisieInt("Choisir une oeuvre pour votre biblio (id)");
 		
-		Oeuvre e= Context.getInstance().getDaoOeuvre().selectById(choix);
+		Oeuvre e= Context.getInstance().getDaoOeuvre().findById(choix);
 		Bibliotheque b =Context.getInstance().getDaoBibliotheque().selectByIdCompte(connected.getId());
 		
 		Fiche f = new Fiche(0, null, 0, null, 0, null, null, e, b);
 		
-		Context.getInstance().getDaoFiche().ajouter(f);
+		Context.getInstance().getDaoFiche().insert(f);
 	}
 
 	private static void deleteOeuvreB() {
-		for(Fiche f : Context.getInstance().getDaoBibliotheque().selectById(connected.getBiblio().getId()).getFiches()) {
+		for(Fiche f : Context.getInstance().getDaoBibliotheque().findById(connected.getBiblio().getId()).getFiches()) {
 			System.out.println(f);
 		}
-		int choix=saisieInt("Choisir une oeuvre dans votre biblio à supprimer");
-		Context.getInstance().getDaoBibliotheque().supprimer(choix);
+		int choix=saisieInt("Choisir une oeuvre dans votre biblio ï¿½ supprimer");
+		Context.getInstance().getDaoBibliotheque().delete(choix);
 
 	}
 
 	private static void updateOeuvreFiche() {
-		for(Fiche fi : Context.getInstance().getDaoFiche().selectAll()) {
+		for(Fiche fi : Context.getInstance().getDaoFiche().findAll()) {
 			System.out.println(fi);
 		
 		int choix=saisieInt("Choisir une Fiche");
-		Fiche f = Context.getInstance().getDaoFiche().selectById(choix);
+		Fiche f = Context.getInstance().getDaoFiche().findById(choix);
 		if(f==null) {System.out.println("Aucune Fiche avec ce numero");}
 		else 
 		{
 			int note=saisieInt("Mettre une note /10");
-			String pret=saisieString("Saisir le nom ou le pseudo à qui vous l'avez preté");
+			String pret=saisieString("Saisir le nom ou le pseudo ï¿½ qui vous l'avez pretï¿½");
 			Integer lu = (saisieString("Avez vous Vu cette oeuvre ? (Y/N)").equalsIgnoreCase("Y"))? saisieInt("Combien de fois?") : null;
 			String avis=saisieString("Saisir votre avis (bien, top, nul, bouse, moyen");
-			Double duree=saisieDouble("Saisir la durée(jour)");
+			Double duree=saisieDouble("Saisir la durï¿½e(jour)");
 
 			f.setNote(note);
 			f.setPretee(pret);
@@ -264,7 +265,7 @@ public class Testbiblio {
 			f.setAvis(avis);
 			f.setDuree(duree);
 
-			Context.getInstance().getDaoFiche().modifier(f);
+			Context.getInstance().getDaoFiche().update(f);
 		}}}
 
 	/*private static void propoOeuvre() {
@@ -282,7 +283,7 @@ public class Testbiblio {
 		System.out.println("Choix du menu :");
 		System.out.println("1 - Ajouter un ami");
 		System.out.println("2 - Supprimer un amis");
-		System.out.println("3 - Selectionner la bibliothèque d'un ami");
+		System.out.println("3 - Selectionner la bibliothï¿½que d'un ami");
 		System.out.println("4 - oeuvre");
 		System.out.println("5 - Retour");
 
@@ -311,7 +312,7 @@ public class Testbiblio {
 		for(Suivi s : Context.getInstance().getDAOSuiviJDBC().SelectAll()) {
 			System.out.println(s);
 		}
-		int choix=saisieInt("Choisir un Amis à supprimer (id)");
+		int choix=saisieInt("Choisir un Amis ï¿½ supprimer (id)");
 		Context.getInstance().getDAOSuiviJDBC().supprimer(choix);
 	}
 
@@ -319,7 +320,7 @@ public class Testbiblio {
 		for(Suivi s : Context.getInstance().getDAOSuiviJDBC().SelectAll().getName()) {
 			System.out.println(s);
 		}
-		int choix= saisieInt("Saisir l'ami dont vous voulez voir la bibliothèque(id)");
+		int choix= saisieInt("Saisir l'ami dont vous voulez voir la bibliothï¿½que(id)");
 		Context.getInstance().getDaoSuivi().SelectById(choix);	
 	}
 
@@ -357,16 +358,16 @@ public class Testbiblio {
 		for(Suivi s : Context.getInstance().getDAOSuiviJDBC().SelectAll()) {
 			System.out.println(s);
 		}
-		int choix=saisieInt("Choisir un Follower à supprimer (id)");
+		int choix=saisieInt("Choisir un Follower ï¿½ supprimer (id)");
 		Context.getInstance().getDAOSuiviJDBC().supprimer(choix);
 
 	}*/
-
+/*
 	public static void main(String[] args) {
 		connected=new Compte(null, null, null);
 		connected.setId(1);
 		
 		menuAdmin();
 		
-	}
+	}*/
 }
