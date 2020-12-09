@@ -3,18 +3,24 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Bibliotheque {
 
-
+	@Id
 	private int id;
+	//Pourquoi
 	private int idOeuvre;
+	@ManyToOne()
 	protected Visibilite visibilite;
-
+	@OneToMany (mappedBy = "fiches")
 	private List<Fiche> fiches=new ArrayList();
 	private String nom;
 	
-
-
 
 	public Bibliotheque(Visibilite visibilite, String nom) {
 		this.visibilite = visibilite;

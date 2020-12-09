@@ -2,9 +2,17 @@ package model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Fiche {
 	
 	//private Oeuvre Oeuvre;
+	@Id
 	private int id;
 	private int note;
 	private double duree;
@@ -12,7 +20,10 @@ public class Fiche {
 
 	private String pretee,avis;
 	private LocalDate creeA, modifieA;
+	@ManyToOne()
 	private Oeuvre oeuvre;
+	@ManyToOne
+	@JoinColumn(name = "biblio")
 	private Bibliotheque biblio;
 
 	public Fiche(int note, String pretee, int lu, String avis, int duree, LocalDate creeA,
