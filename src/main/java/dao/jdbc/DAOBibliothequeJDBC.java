@@ -4,14 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import dao.IDAOBibliotheque;
-import model.Album;
-import test.Visibilite;
-import model.*;
+import model.Bibliotheque;
+import model.Visibilite;
 
 public class DAOBibliothequeJDBC implements IDAOBibliotheque{
 
