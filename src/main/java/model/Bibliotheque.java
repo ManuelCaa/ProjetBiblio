@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 @Entity
 public class Bibliotheque {
 
@@ -15,9 +16,9 @@ public class Bibliotheque {
 	private int id;
 	//Pourquoi
 	private int idOeuvre;
-	@ManyToOne()
+	
 	protected Visibilite visibilite;
-	@OneToMany (mappedBy = "fiches")
+	@OneToMany (mappedBy = "biblio")
 	private List<Fiche> fiches=new ArrayList();
 	private String nom;
 	
