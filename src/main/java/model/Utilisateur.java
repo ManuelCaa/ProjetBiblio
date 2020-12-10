@@ -41,11 +41,11 @@ public class Utilisateur extends Compte {
 	}
 
 	public List<Suivi> getFollowing() {
-		return following;
+		return followings;
 	}
 
 	public void setFollowing(List<Suivi> following) {
-		this.following = following;
+		this.followings = following;
 	}
 
 	public List<Oeuvre> getOeuvres() {
