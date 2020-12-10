@@ -14,7 +14,7 @@ import dao.jpa.DAOOeuvreJPA;
 import dao.jpa.DAOSuiviJPA;
 import dao.jpa.DAOUtilisateurJPA;
 import model.Admin;
-import model.Bibliotheque;
+import model.*;
 
 public class TestJPA {
 	
@@ -39,6 +39,23 @@ public class TestJPA {
 		Scanner sc = new Scanner(System.in);
 		return sc.nextLine();
 	}
+	public static void remplissageBase() {
+			Bibliotheque b =new Bibliotheque();
+			
+			Bibliotheque hajar =new Bibliotheque();
+
+			Admin a = new Admin("admin@gmail,com","123456","admin",b);
+			Admin a1=new Admin("admin1@gmail.com","toto","admin1",hajar);
+			
+			Utilisateur u1 = new Utilisateur("hajar@gmail.com", "1234567", "hajars", hajar);
+			Utilisateur u2 = new Utilisateur("toto@gmail.com", "totol", "u2", b);
+			
+			Context.getInstance().getDaoAdmin().insert(a);
+			Context.getInstance().getDaoAdmin().insert(a1);
+			
+			Context.getInstance().getDaoAdmin().update(a).setMail("admin2@gmail.com");
+		
+	}
 	
 	public static void main(String[] args) {
 		
@@ -52,23 +69,7 @@ public class TestJPA {
 		DAOOeuvreJPA daoOeuvre = new DAOOeuvreJPA();
 		DAOSuiviJPA daoSuivi = new DAOSuiviJPA();
 		DAOUtilisateurJPA daoUtilisateur = new DAOUtilisateurJPA();
-		
-		Bibliotheque b =new Bibliotheque();
-		
-		Bibliotheque hajar =new Bibliotheque();
-
-		Admin a = new Admin("admin@gmail,com","123456","admin",b);
-		Admin a1=new Admin("admin1@gmail.com","toto","admin1",hajar);
-		
-		Context.getInstance().getDaoAdmin().insert(a);
-		Context.getInstance().getDaoAdmin().insert(a1);
-		
-		for(Admin ad : Context.getInstance().getDaoAdmin().findAll()) 
-		{
-			System.out.println(ad.getMail()+" "+ad.getPassword()+" "+ad.getPseudo());
-		}
-		
-		Context.getInstance().getDaoAdmin().update(a).setMail("admin2@gmail.com");
+		remplissageBase();
 		
 		Context.getInstance().closeEmf();
 }
