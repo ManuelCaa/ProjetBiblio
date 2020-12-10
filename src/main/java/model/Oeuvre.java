@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Oeuvre {
+public abstract class Oeuvre {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

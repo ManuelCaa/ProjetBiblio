@@ -19,8 +19,6 @@ public class Livre extends Oeuvre{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="Categorie")
-	private static TypeOeuvre type = TypeOeuvre.livre;
 	
 	
 	private int  dureeLecture;
@@ -31,6 +29,7 @@ public class Livre extends Oeuvre{
 	
 	
 	public Livre() {
+		this.typeOeuvre = TypeOeuvre.livre;
 	
 	}
 
@@ -39,6 +38,7 @@ public class Livre extends Oeuvre{
 		super(titre, descriptif, nomFichierImage, annee, editeur, creeA, modifieeA, moderationEffectuee);
 		this.dureeLecture = dureeLecture;
 		this.auteur = auteur;
+		this.typeOeuvre = TypeOeuvre.livre;
 	}
 
 	public int getDureeLecture() {
@@ -57,9 +57,6 @@ public class Livre extends Oeuvre{
 		this.auteur = auteur;
 	}
 
-	public static TypeOeuvre getType() {
-		return type;
-	}
 
 	
 	

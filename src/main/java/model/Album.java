@@ -18,7 +18,7 @@ public class Album extends Oeuvre{
 	private int id;
 	
 	//@Column(name="Categorie")
-	private TypeOeuvre type = TypeOeuvre.album;
+
 	
 	private int nombreMorceaux;
 	
@@ -28,6 +28,8 @@ public class Album extends Oeuvre{
 	
 	
 	public Album() {
+		
+		this.typeOeuvre = TypeOeuvre.album;
 
 	}
 
@@ -36,6 +38,7 @@ public class Album extends Oeuvre{
 		super(titre, descriptif, nomFichierImage, annee, editeur, creeA, modifieeA, moderationEffectuee);
 		this.nombreMorceaux = nombreMorceaux;
 		this.artiste = artiste;
+		this.typeOeuvre = TypeOeuvre.album;
 	}
 
 	public int getNombreMorceaux() {
@@ -54,9 +57,6 @@ public class Album extends Oeuvre{
 		this.artiste = artiste;
 	}
 
-	public TypeOeuvre getType() {
-		return type;
-	}
-
+	
 
 }
