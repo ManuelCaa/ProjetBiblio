@@ -1,21 +1,17 @@
 package model;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
-/*Single Table. C'est la stratégie par défaut utilisée
- * par JPA lorsqu'aucune stratégie n'est implicitement
- * définie et que la classe mère de la hiérachie est une
- * entité. Avec cette stratégie, une seule table
- * est créée et partage par toutes les classes de la
- * hiérachie
- */
+@DiscriminatorColumn(name="type_compte")
 public class Compte {
 
 	@Id
@@ -24,6 +20,7 @@ public class Compte {
 	protected String mail;
 	protected String password;
 	protected String pseudo;
+	@OneToOne
 	private Bibliotheque biblio;
 
 	public Compte() {

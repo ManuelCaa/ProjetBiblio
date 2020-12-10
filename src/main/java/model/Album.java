@@ -7,17 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 
 @Entity
+@PrimaryKeyJoinColumn(name= "id",referencedColumnName = "id")
 public class Album extends Oeuvre{
-	
-	
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="Categorie")
+	//@Column(name="Categorie")
 	private TypeOeuvre type = TypeOeuvre.album;
 	
 	private int nombreMorceaux;

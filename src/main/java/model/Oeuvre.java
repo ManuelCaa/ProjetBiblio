@@ -11,9 +11,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Oeuvre {
 
 	@Id
@@ -31,10 +34,10 @@ public class Oeuvre {
 	
 	private String editeur;
 	
-	@Column(columnDefinition = "DATE", name="Cr��_le")
+	@Column(columnDefinition = "DATE", name="CreeLe")
 	private LocalDate creeA;
 	
-	@Column(columnDefinition = "DATE", name="Modifi�e_le")
+	@Column(columnDefinition = "DATE", name="ModifieLe")
 	private LocalDate modifieeA;
 	
 	private boolean moderationEffectuee;
