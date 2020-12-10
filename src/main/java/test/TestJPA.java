@@ -14,6 +14,7 @@ import dao.jpa.DAOOeuvreJPA;
 import dao.jpa.DAOSuiviJPA;
 import dao.jpa.DAOUtilisateurJPA;
 import model.Admin;
+import model.Bibliotheque;
 
 public class TestJPA {
 	
@@ -51,9 +52,13 @@ public class TestJPA {
 		DAOOeuvreJPA daoOeuvre = new DAOOeuvreJPA();
 		DAOSuiviJPA daoSuivi = new DAOSuiviJPA();
 		DAOUtilisateurJPA daoUtilisateur = new DAOUtilisateurJPA();
+		
+		Bibliotheque b =new Bibliotheque();
+		
+		Bibliotheque hajar =new Bibliotheque();
 
-		Admin a = new Admin("admin@gmail,com","123456","admin");
-		Admin a1=new Admin("admin1@gmail.com","toto","admin1");
+		Admin a = new Admin("admin@gmail,com","123456","admin",b);
+		Admin a1=new Admin("admin1@gmail.com","toto","admin1",hajar);
 		
 		Context.getInstance().getDaoAdmin().insert(a);
 		Context.getInstance().getDaoAdmin().insert(a1);
