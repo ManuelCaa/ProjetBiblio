@@ -37,6 +37,7 @@ public class Context {
 	private IDAOUtilisateur daoUtilisateur = new DAOUtilisateurJPA();
 	private IDAOAdmin daoAdmin = new DAOAdminJPA();
 	private IDAOCompte daoCompte = new DAOCompteJPA();
+	
 	private Context() {}
 	
 	public static Context getInstance()
@@ -46,6 +47,14 @@ public class Context {
 			_instance=new Context();
 		}
 		return _instance;
+	}
+
+	public EntityManagerFactory getEmf() {
+		return emf;
+	}
+	public void closeEmf() 
+	{
+		emf.close();
 	}
 
 
@@ -80,10 +89,6 @@ public class Context {
 
 	public IDAOCompte getDaoCompte() {
 		return daoCompte;
-	}
-
-	public EntityManagerFactory getEmf() {
-		return emf;
 	}
 
 	public IDAOSuivi getDaoSuivi() {
