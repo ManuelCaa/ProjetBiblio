@@ -64,14 +64,6 @@ public class Utilisateur extends Compte {
 		this.bibliotheque = bibliotheque;
 	}
 
-	@Override
-	public String toString() {
-		return "Utilisateur [followers=" + followers + ", following=" + followings + ", oeuvres=" + oeuvres
-				+ ", bibliotheque=" + bibliotheque + "]";
-	}
-
-	
-
 	
 
 	

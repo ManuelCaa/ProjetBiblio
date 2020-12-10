@@ -12,9 +12,5 @@ public class Admin extends Compte{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String toString() {
-		return "Admin [mail=" + mail + ", password=" + password + ", pseudo=" + pseudo + "]";
-	}
 
 }

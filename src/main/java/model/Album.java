@@ -58,9 +58,5 @@ public class Album extends Oeuvre{
 		return type;
 	}
 
-	@Override
-	public String toString() {
-		return "Album [nombreMorceaux=" + nombreMorceaux + ", artiste=" + artiste + "]";
-	}
-	
+
 }
