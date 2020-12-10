@@ -13,11 +13,11 @@ import javax.persistence.Id;
 public class Album extends Oeuvre{
 	
 	
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="Catégorie")
+	@Column(name="Categorie")
 	private TypeOeuvre type = TypeOeuvre.album;
 	
 	private int nombreMorceaux;

@@ -1,6 +1,8 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,11 +40,11 @@ public class Oeuvre {
 	private boolean moderationEffectuee;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="Cat�gorie", nullable=false,columnDefinition="VARCHAR(50)")
+	@Column(name="Categorie", nullable=false,columnDefinition="VARCHAR(50)")
 	protected TypeOeuvre typeOeuvre;
 	
 	@OneToMany
-	private Fiche fiche;
+	private List<Fiche> fiches = new ArrayList<>();
 	
 	
 	public Oeuvre() {

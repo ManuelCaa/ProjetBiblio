@@ -13,11 +13,11 @@ import javax.persistence.Id;
 public class Livre extends Oeuvre{
 	
 	
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="Catégorie")
+	@Column(name="Categorie")
 	private static TypeOeuvre type = TypeOeuvre.livre;
 	
 	
