@@ -16,7 +16,7 @@ public class Utilisateur extends Compte {
 	
 	
 	//oeuvres crees par l'utilisateur
-	@OneToMany
+	@OneToMany(mappedBy = "utilisateur")
 	private List<Oeuvre> oeuvres=new ArrayList();
 	
 

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -31,7 +32,8 @@ public class Oeuvre {
 	private String nomFichierImage;
 	
 	private int annee;
-	
+	@OneToOne
+	private Utilisateur utilisateur;
 	private String editeur;
 	
 	@Column(columnDefinition = "DATE", name="CreeLe")
@@ -46,7 +48,7 @@ public class Oeuvre {
 	@Column(name="Categorie", nullable=false,columnDefinition="VARCHAR(50)")
 	protected TypeOeuvre typeOeuvre;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "oeuvre")
 	private List<Fiche> fiches = new ArrayList<>();
 	
 	
