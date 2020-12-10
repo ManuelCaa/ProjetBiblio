@@ -9,20 +9,18 @@ import dao.IDAOAlbum;
 import dao.IDAOBibliotheque;
 import dao.IDAOCompte;
 import dao.IDAOFiche;
-import dao.IDAOFollowers;
-import dao.IDAOFollowing;
 import dao.IDAOLivre;
 import dao.IDAOOeuvre;
+import dao.IDAOSuivi;
 import dao.IDAOUtilisateur;
 import dao.jpa.DAOAdminJPA;
 import dao.jpa.DAOAlbumJPA;
 import dao.jpa.DAOBibliothequeJPA;
 import dao.jpa.DAOCompteJPA;
 import dao.jpa.DAOFicheJPA;
-import dao.jpa.DAOFollowersJPA;
-import dao.jpa.DAOFollowingJPA;
 import dao.jpa.DAOLivreJPA;
 import dao.jpa.DAOOeuvreJPA;
+import dao.jpa.DAOSuiviJPA;
 import dao.jpa.DAOUtilisateurJPA;
 public class Context {
 	
@@ -35,8 +33,7 @@ public class Context {
 	private IDAOFiche daoFiche = new DAOFicheJPA();
 	private IDAOLivre daoLivre = new DAOLivreJPA();
 	private IDAOOeuvre daoOeuvre = new DAOOeuvreJPA();
-	private IDAOFollowers daoFollowers= new DAOFollowersJPA();
-	private IDAOFollowing daoFollowing = new DAOFollowingJPA();
+	private IDAOSuivi daoSuivi= new DAOSuiviJPA();
 	private IDAOUtilisateur daoUtilisateur = new DAOUtilisateurJPA();
 	private IDAOAdmin daoAdmin = new DAOAdminJPA();
 	private IDAOCompte daoCompte = new DAOCompteJPA();
@@ -89,13 +86,10 @@ public class Context {
 		return emf;
 	}
 
-	public IDAOFollowers getDaoFollowers() {
-		return daoFollowers;
+	public IDAOSuivi getDaoSuivi() {
+		return daoSuivi;
 	}
 
-	public IDAOFollowing getDaoFollowing() {
-		return daoFollowing;
-	}
 
 
 	

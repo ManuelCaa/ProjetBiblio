@@ -73,8 +73,9 @@ public class DAOBibliothequeJPA implements IDAOBibliotheque{
 
 	@Override
 	public Bibliotheque selectByIdCompte(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em=Context.getInstance().getEmf().createEntityManager();
+		Query maBiblio = em.createQuery("from bibliotheque where idCompte= :id",Bibliotheque.class);
+		return (Bibliotheque) maBiblio.getResultStream();
 	}
 
 }

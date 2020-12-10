@@ -13,7 +13,7 @@
 			<property name="hibernate.connection.driver"
 				value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.url"
-				value="jdbc:mysql://localhost:8889/scott?serverTimezone=UTC" />
+				value="jdbc:mysql://localhost:8889/bibliotheque?serverTimezone=UTC" />
 			<property name="hibernate.connection.user" value="root" />
 			<property name="hibernate.connection.password"
 				value="root" />

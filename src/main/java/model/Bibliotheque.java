@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 @Entity
 public class Bibliotheque {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	//Pourquoi
 	private int idOeuvre;
@@ -22,6 +22,10 @@ public class Bibliotheque {
 	private String nom;
 	
 
+
+	public Bibliotheque() {
+		
+	}
 	public Bibliotheque(Visibilite visibilite, String nom) {
 		this.visibilite = visibilite;
 		this.nom = nom;

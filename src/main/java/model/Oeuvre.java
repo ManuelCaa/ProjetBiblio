@@ -2,7 +2,9 @@ package model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
 
+@Entity
 public class Oeuvre {
 
 	private int id;

@@ -5,12 +5,11 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Fiche {
-	
+
 	//private Oeuvre Oeuvre;
 	@Id
 	private int id;
@@ -20,12 +19,15 @@ public class Fiche {
 
 	private String pretee,avis;
 	private LocalDate creeA, modifieA;
-	@ManyToOne()
+	@ManyToOne
 	private Oeuvre oeuvre;
 	@ManyToOne
 	@JoinColumn(name = "biblio")
 	private Bibliotheque biblio;
 
+	public Fiche() {
+		
+	}
 	public Fiche(int note, String pretee, int lu, String avis, int duree, LocalDate creeA,
 			LocalDate modifieA, Oeuvre oeuvre, Bibliotheque b) {
 		this.note = note;
@@ -114,20 +116,6 @@ public class Fiche {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Fiche [id=" + id + ", note=" + note + ", duree=" + duree + ", lu=" + lu + ", pretee=" + pretee
-				+ ", avis=" + avis + ", creeA=" + creeA + ", modifieA=" + modifieA + ", oeuvre=" + oeuvre + ", biblio="
-				+ biblio + "]";
-	}
 
-	
-	
-
-	
-	
-	
-	
-	
 
 }

@@ -9,12 +9,12 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
-/*Single Table. C'est la stratégie par défaut utilisée 
- * par JPA lorsqu'aucune stratégie n'est implicitement 
- * définie et que la classe mère de la hiérachie est une
- *  entité. Avec cette stratégie, une seule table
- *  est créée et partage par toutes les classes de la 
- *  hiérachie
+/*Single Table. C'est la stratÃ©gie par dÃ©faut utilisÃ©e
+ * par JPA lorsqu'aucune stratÃ©gie n'est implicitement
+ * dÃ©finie et que la classe mÃ¨re de la hiÃ©rachie est une
+ * entitÃ©. Avec cette stratÃ©gie, une seule table
+ * est crÃ©Ã©e et partage par toutes les classes de la
+ * hiÃ©rachie
  */
 public class Compte {
 
@@ -25,17 +25,17 @@ public class Compte {
 	protected String password;
 	protected String pseudo;
 	private Bibliotheque biblio;
-	
+
 	public Compte() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Compte(String mail, String password, String pseudo) {
 		this.mail = mail;
 		this.password = password;
 		this.pseudo = pseudo;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -75,25 +75,25 @@ public class Compte {
 	public void setBiblio(Bibliotheque biblio) {
 		this.biblio = biblio;
 	}
-	
-	
-	
-	/*public static Compte checkConnect(String pseudo,String password)
-	{
-		for(Compte c : Testbiblio.comptes)
-		{
-			if
-			(c.getPseudo().equals(pseudo) && c.getPassword().equals(password))
-			{
-				return c;
-			}}
-		return  null;
 
-	}*/
-	
-	
-	
-	
-	
-	
+
+
+	/*public static Compte checkConnect(String pseudo,String password)
+{
+for(Compte c : Testbiblio.comptes)
+{
+if
+(c.getPseudo().equals(pseudo) && c.getPassword().equals(password))
+{
+return c;
+}}
+return null;
+
+}*/
+
+
+
+
+
+
 }

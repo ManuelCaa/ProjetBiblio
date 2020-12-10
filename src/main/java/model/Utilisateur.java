@@ -3,36 +3,48 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur extends Compte {
-
-	private List<Followers> followers= new ArrayList();
-	private List<Following> following= new ArrayList();
+	@OneToMany(mappedBy = "following")
+	private List<Suivi> followers= new ArrayList();
+	@OneToMany(mappedBy = "follower") //qui suis-je par rapport Ã  cette liste
+	private List<Suivi> followings= new ArrayList();
 	
-	//oeuvres créées par l'utilisateur
+	//oeuvres crees par l'utilisateur
+	@OneToMany
 	private List<Oeuvre> oeuvres=new ArrayList();
 	
+	@OneToOne
 	private Bibliotheque bibliotheque;
-	
+	public Utilisateur() {
+		
+	}
 	public Utilisateur(String mail, String password, String pseudo,Bibliotheque b) {
 		super(mail, password, pseudo);
 		this.bibliotheque=b;
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<Followers> getFollowers() {
+	public List<Suivi> getFollowers() {
 		return followers;
 	}
 
-	public void setFollowers(List<Followers> followers) {
+	public void setFollowers(List<Suivi> followers) {
 		this.followers = followers;
 	}
 
-	public List<Following> getFollowing() {
+	public List<Suivi> getFollowing() {
 		return following;
 	}
 
-	public void setFollowing(List<Following> following) {
+	public void setFollowing(List<Suivi> following) {
 		this.following = following;
 	}
 
@@ -54,7 +66,7 @@ public class Utilisateur extends Compte {
 
 	@Override
 	public String toString() {
-		return "Utilisateur [followers=" + followers + ", following=" + following + ", oeuvres=" + oeuvres
+		return "Utilisateur [followers=" + followers + ", following=" + followings + ", oeuvres=" + oeuvres
 				+ ", bibliotheque=" + bibliotheque + "]";
 	}
 

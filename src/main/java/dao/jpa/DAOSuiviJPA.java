@@ -6,31 +6,31 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import config.Context;
-import dao.IDAOFollowing;
-import model.Following;
+import dao.IDAOSuivi;
+import model.Suivi;
 
-public class DAOFollowingJPA implements IDAOFollowing{
+public class DAOSuiviJPA implements IDAOSuivi{
 
 	@Override
-	public Following findById(Integer id) {
+	public Suivi findById(Integer id) {
 		EntityManager em=Context.getInstance().getEmf().createEntityManager();
-		Following b = em.find(Following.class, id);
+		Suivi b = em.find(Suivi.class, id);
 		em.close();
 		return b;
 	}
 
 	@Override
-	public List<Following> findAll() {
+	public List<Suivi> findAll() {
 		EntityManager em=Context.getInstance().getEmf().createEntityManager();
 
-		Query maRequete = em.createQuery("from Following",Following.class);
+		Query maRequete = em.createQuery("from Suivi",Suivi.class);
 
 		return maRequete.getResultList();
 	}
 
 
 	@Override
-	public void insert(Following objet) {
+	public void insert(Suivi objet) {
 
 		EntityManager em=Context.getInstance().getEmf().createEntityManager();
 		em.getTransaction().begin();
@@ -40,7 +40,7 @@ public class DAOFollowingJPA implements IDAOFollowing{
 	}
 
 	@Override
-	public Following update(Following objet) {
+	public Suivi update(Suivi objet) {
 		EntityManager em=Context.getInstance().getEmf().createEntityManager();
 		em.getTransaction().begin();
 		objet=em.merge(objet);
@@ -50,7 +50,7 @@ public class DAOFollowingJPA implements IDAOFollowing{
 	}
 
 	@Override
-	public void delete(Following objet) {
+	public void delete(Suivi objet) {
 		EntityManager em=Context.getInstance().getEmf().createEntityManager();
 		em.getTransaction().begin();
 		objet=em.merge(objet);
@@ -64,7 +64,7 @@ public class DAOFollowingJPA implements IDAOFollowing{
 	public void deleteById(Integer id) {
 		EntityManager em=Context.getInstance().getEmf().createEntityManager();
 		em.getTransaction().begin();
-		Following d=em.find(Following.class, id);
+		Suivi d=em.find(Suivi.class, id);
 		
 		em.remove(d);
 		
