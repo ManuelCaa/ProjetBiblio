@@ -2,22 +2,53 @@ package model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Oeuvre {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String titre;
+	
+	@Column(name="Description",columnDefinition="VARCHAR(80)")
 	private String descriptif;
+	
+	@Column(name="Image")
 	private String nomFichierImage;
+	
 	private int annee;
+	
 	private String editeur;
+	
+	@Column(columnDefinition = "DATE", name="Cr��_le")
 	private LocalDate creeA;
+	
+	@Column(columnDefinition = "DATE", name="Modifi�e_le")
 	private LocalDate modifieeA;
+	
 	private boolean moderationEffectuee;
-
-
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="Cat�gorie", nullable=false,columnDefinition="VARCHAR(50)")
+	protected TypeOeuvre typeOeuvre;
+	
+	@OneToMany
+	private Fiche fiche;
+	
+	
+	public Oeuvre() {
+		
+	}
+	
 	public Oeuvre(String titre, String descriptif, String nomFichierImage, int annee, String editeur, LocalDate creeA,
 			LocalDate modifieeA, boolean moderationEffectuee) {
 		this.titre = titre;
@@ -115,11 +146,5 @@ public class Oeuvre {
 			this.id = id;
 		}
 	
-		public String toString() {
-			return "Oeuvre [id= "+getId()+" titre=" + titre + ", descriptif=" + descriptif + ", nomFichierImage=" + nomFichierImage
-			+ ", annee=" + annee + ", editeur=" + editeur + ", creeA=" + creeA + ", modifieeA=" + modifieeA
-			+ ", moderationEffectuee=" + moderationEffectuee + "]";
-
-
-
-	}}
+		
+	}
