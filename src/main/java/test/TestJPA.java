@@ -17,7 +17,7 @@ import model.Admin;
 import model.*;
 
 public class TestJPA {
-	
+
 	public static int saisieInt(String msg) 
 	{
 		System.out.println(msg);
@@ -50,19 +50,19 @@ public class TestJPA {
 			Utilisateur u1 = new Utilisateur("hajar@gmail.com", "1234567", "hajars", b1);
 			Utilisateur u2 = new Utilisateur("toto@gmail.com", "totol", "u2", b2);
 			
-			Oeuvre o1=new Oeuvre("Harry Potter et la coupe de feu","quatrième année au collège de Poudlard","HPCF",
+			Oeuvre o1=new Oeuvre("Harry Potter et la coupe de feu","quatrieme annee au college de Poudlard","HPCF",
 					2000,"Gallimard",LocalDate.parse("11-05-2018"), LocalDate.parse("12-04-2019"),true);
 			
-			Oeuvre o2=new Oeuvre("Harry Potter à l'école des sorciers","première année au collège de Poudlard","HPES",
+			Oeuvre o2=new Oeuvre("Harry Potter e l'ecole des sorciers","premiere annee au college de Poudlard","HPES",
 					1998,"Gallimard",LocalDate.parse("25-08-2012"),LocalDate.parse("12-04-2019"),true);
 			
-			Album al1 = new Album("Album1","album1 sur scène","FIAL1",2005, "Universal",LocalDate.parse("26-08-2014"),LocalDate.parse("25-04-2018"),true,12,"M");
+			Album al1 = new Album("Album1","album1 sur scene","FIAL1",2005, "Universal",LocalDate.parse("26-08-2014"),LocalDate.parse("25-04-2018"),true,12,"M");
 			Album al2 = new Album("Album2","album2 compil","FIAL2",2007,"Universal",LocalDate.parse("26-12-2017"),LocalDate.parse("05-06-2019"),true,14,"Goya");
 			
-			Livre l1=new Livre("Harry Potter à l'école des sorciers","première année au collège de Poudlard","HPES",
+			Livre l1=new Livre("Harry Potter a l'ecole des sorciers","premiere annee au college de Poudlard","HPES",
 					1998,"Gallimard",LocalDate.parse("25-08-2012"),LocalDate.parse("12-04-2019"),true,15,"Rowling");
 			
-			Livre l2= new Livre("Harry Potter et le prisionner d'Azkaban","troisième année au collège de Poudlard","HPPA",
+			Livre l2= new Livre("Harry Potter et le prisionner d'Azkaban","troisieme annee au college de Poudlard","HPPA",
 					1999,"Gallimard",LocalDate.parse("19-08-2014"),LocalDate.parse("12-04-2019"),true,18,"Rowling");
 			
 			
@@ -83,9 +83,11 @@ public class TestJPA {
 		
 	}
 	
+
+
 	public static void main(String[] args) {
-		
-		
+
+
 		DAOAdminJPA daoAdmin= new DAOAdminJPA();
 		DAOAlbumJPA daoAlbum = new DAOAlbumJPA();
 		DAOBibliothequeJPA daoBiblio = new DAOBibliothequeJPA();
@@ -95,8 +97,8 @@ public class TestJPA {
 		DAOOeuvreJPA daoOeuvre = new DAOOeuvreJPA();
 		DAOSuiviJPA daoSuivi = new DAOSuiviJPA();
 		DAOUtilisateurJPA daoUtilisateur = new DAOUtilisateurJPA();
-		remplissageBase();
+		
 		
 		Context.getInstance().closeEmf();
-}
+	}
 }
