@@ -89,8 +89,8 @@ public class Testbiblio {
 
 			
 			anew.setPseudo(pseudo);
-			anew.setMail(pass);
-			anew.setPassword(mail);
+			anew.setMail(mail);
+			anew.setPassword(pass);
 			bnew.setNom(nom);
 			Context.getInstance().getDaoBibliotheque().insert(bnew);
 
@@ -108,8 +108,8 @@ public class Testbiblio {
 			
 			
 			unew.setPseudo(pseudou);
-			unew.setMail(passu);
-			unew.setPassword(mailu);
+			unew.setMail(mailu);
+			unew.setPassword(passu);
 			bnewu.setNom(nomu);
 
 			Context.getInstance().getDaoBibliotheque().insert(bnewu);
@@ -325,7 +325,7 @@ public class Testbiblio {
 	}
 
 
-/*	private static void showBiblio() {
+	private static void showBiblio() {
 		System.out.println("Votre biblio");
 		Bibliotheque b =Context.getInstance().getDaoBibliotheque().selectByIdCompte(connected.getId());
 		
@@ -333,7 +333,7 @@ public class Testbiblio {
 			System.out.println(b.getFiches());
 		}
 
-	private static void gestionMabiblio() {
+	/*	private static void gestionMabiblio() {
 		System.out.println("Gestion de votre biblio");
 		System.out.println("Choix du menu :");
 		System.out.println("1 - Ajouter une oeuvre a ma biblio");
