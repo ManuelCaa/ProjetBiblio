@@ -17,7 +17,7 @@ public class Bibliotheque {
 	private int id;
 	//Pourquoi
 	private int idOeuvre;
-	@OneToOne
+	@OneToOne(mappedBy = "biblio")
 	protected Compte compte;
 	protected Visibilite visibilite;
 
