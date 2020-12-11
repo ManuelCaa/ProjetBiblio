@@ -20,6 +20,9 @@ public class Bibliotheque {
 	@OneToOne
 	protected Compte compte;
 	protected Visibilite visibilite;
+
+
+
 	@OneToMany (mappedBy = "biblio")
 	private List<Fiche> fiches=new ArrayList();
 	private String nom;
@@ -74,8 +77,12 @@ public class Bibliotheque {
 	}
 
 
-
-
+	public Compte getCompte() {
+		return compte;
+	}
+	public void setCompte(Compte compte) {
+		this.compte = compte;
+	}
 
 
 

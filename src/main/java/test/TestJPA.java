@@ -86,7 +86,7 @@ public class TestJPA {
 	
 	private static void menuAcceuil() {
 		
-			int choix = saisieInt("Application Bibliotheque\n1: Se connecter\n2: Créer un Compte");
+			int choix = saisieInt("Application Bibliotheque : \n1 - Se connecter \n2 - Créer un Compte ");
 			switch(choix) {
 				case 1:
 					String pseudo= saisieString("Pseudo:");
@@ -115,27 +115,93 @@ public class TestJPA {
 			}
 		
 		}
-	private static void menuUtilisateur() {
-		System.out.println("Bienvenue dans votre bibliotheque");
-		System.out.println("Choix du menu :");
-		System.out.println("1 - Voir ma bibliotheque");
-		System.out.println("2 - Gestion de ma bibliotheque");
-		System.out.println("3 - Voir les oeuvres");
-		System.out.println("4 - Mes amis");
-		System.out.println("5 - Mes Followers");
-		System.out.println("6 - Se Deconnecter");
-		int choix = saisieInt("");
+
+	private static void menuAdmin() {
+			System.out.println("Bienvenue dans le menu Admin");
+			System.out.println("Choix du menu :");
+			int choix = saisieInt("1: Parametres du compte\n2: Voir les Bibliotheque existantes\n3: Voir ma bibliotheque\n4 - Gestion de ma bibliotheque\n5 - Se Deconnecter");
+			switch(choix) 
+			{
+				case 1: gestionCompte(); break; 
+				case 2: voirBibliotheques();break;
+				case 3: voirMaBibliotheque();break;
+				case 4: gestionMaBibliotheque();break;
+				case 5 : System.exit(0);break;
+				default : menuAdmin(); break;
+			}
+			menuAdmin();
+	}
+	private static void gestionCompte() {
+		System.out.println("Compte [id=" + connected.getId() + ", mail=" + connected.getMail() + ", password=" + connected.getPassword() + ", pseudo=" + connected.getPseudo() + ", biblio="
+				+ connected.getBiblio() + ", followers=" + connected.getFollowers() + ", followings=" + connected.getFollowing() + "]");
+	
+		int choix= saisieInt("\n1 - Changer le password\n2 - Changer le pseudo \n3 - Supprimer un follower\n4 - Demande des abonnements (followers)\n5 - Supprimer un abonnement\n6 - quitter\n7 - Se deconnecter");
+		switch(choix)
+		{
+		case 1 : break; 
+		case 2 : break;
+		case 3 : break;
+		case 4 : break;
+		case 5 : break;
+		case 6 : gestionCompte();break;
+		case 7 : System.exit(0);break;
+		default : menuAdmin(); break;
+	}
+	gestionCompte();
+	}
+	private static void voirBibliotheques() {
+		for(Bibliotheque b : Context.getInstance().getDaoBibliotheque().findAll()) {
+			System.out.println("Bibliotheque [id=" + b.getId() + ", nom=" + b.getNom()+ ", visibilite=" + b.getVisibilite()+", fiches=" + b.getFiches() +"]");
+		}
+		int choix = saisieInt("1: Suivre un compte\n2: quitter \n3 - Se Deconnecter");
 		switch(choix) 
 		{
-		case 1:showBiblio();break;
-		case 2:gestionMabiblio();break;
-		case 3:showOeuvre();break;
-		//case 4:gestionMesAmis();break;
-		//case 5:gestionFollowers();break;
-		case 6:System.exit(0);break;
-		}
+			case 1: int id= saisieInt("Id de la bibliotheque du compte");
+					Bibliotheque b = Context.getInstance().getDaoBibliotheque().findById(id);
+					Suivi s1,s2;
+					if(b.getVisibilite().equals(Visibilite.Public)) {
+						 s1 = new Suivi(true, (Utilisateur)connected, (Utilisateur)b.getCompte());
+						 s2= new Suivi(true, (Utilisateur)b.getCompte(), (Utilisateur)connected);
+					}else {
+						 s1 = new Suivi(false, (Utilisateur)connected, (Utilisateur)b.getCompte());
+						 s2= new Suivi(false, (Utilisateur)b.getCompte(), (Utilisateur)connected);
+					}
 
-		menu();
+					connected.getFollowing().add(s1);
+					b.getCompte().getFollowers().add(s2);
+				  break;
+			case 2 : menuAdmin();break;
+			case 3 : System.exit(0);break;
+			default : voirBibliotheques(); break;
+		}
+		voirBibliotheques();
+	}
+
+	private static void voirMaBibliotheque() {
+		System.out.println("Visualisation de ma bibliotheque");
+		System.out.println("choix de menu:");
+		int choix  = saisieInt("1: Parametres de ma bibliotheque\n2 - quitter\n3 - Se Deconnecter");
+		switch(choix) 
+		{
+			case 1: 
+				Bibliotheque b = connected.getBiblio();
+				System.out.println("Bibliotheque [id=" + b.getId() + ", nom=" + b.getNom()+ ", visibilite=" + b.getVisibilite()+", fiches=" + b.getFiches() +"]");
+				break;
+			case 2 : menuAdmin();break;
+			case 3 : System.exit(0);break;
+			default : voirMaBibliotheque(); break;
+		}
+		voirMaBibliotheque() ;
+	}
+	
+	private static void gestionMaBibliotheque() {
+
+		System.out.println("Gestion de ma bibliotheque");
+		System.out.println("choix de menu:");
+		int choix  = saisieInt("1: Parametres de ma bibliotheque\n2 - Parametres de mon compte\n3- La liste de mes abonnes\n3 - La liste de mes abonnements\n quitter\n3 - Se Deconnecter");
+		
+		gestionMaBibliotheque();
+		
 	}
 	public static void main(String[] args) {
 		
