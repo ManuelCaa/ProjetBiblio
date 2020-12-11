@@ -2,16 +2,14 @@ package model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 
 @Entity
-@PrimaryKeyJoinColumn(name= "id",referencedColumnName = "id")
+@DiscriminatorValue("album")
 public class Album extends Oeuvre{
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
