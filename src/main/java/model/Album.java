@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 @DiscriminatorValue("album")
 public class Album extends Oeuvre{
 	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
 	
 	//@Column(name="Categorie")
 

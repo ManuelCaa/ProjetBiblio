@@ -111,6 +111,12 @@ public class Fiche {
 		return biblio;
 	}
 
+	public void setOeuvre(Oeuvre oeuvre) {
+		this.oeuvre = oeuvre;
+	}
+	public void setBiblio(Bibliotheque biblio) {
+		this.biblio = biblio;
+	}
 	public void setModifieA(LocalDate modifieA) {
 		this.modifieA = modifieA;
 	}

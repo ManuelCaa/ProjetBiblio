@@ -14,10 +14,6 @@ public class Livre extends Oeuvre{
 	
 	
 	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	
 	
 	private int  dureeLecture;
 	

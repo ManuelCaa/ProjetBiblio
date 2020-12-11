@@ -69,9 +69,8 @@ public class Oeuvre {
 		this.modifieeA = modifieeA;
 		this.moderationEffectuee = moderationEffectuee;
 	}
-	public int getId() {
-		return this.id;
-	}
+	
+	
 		public String getTitre() {
 			return titre;
 		}
@@ -151,9 +150,15 @@ public class Oeuvre {
 		}
 
 
+	
+
+		public int getId() {
+			return id;
+		}
+
 		public void setId(int id) {
 			this.id = id;
 		}
+
 	
-		
 	}
