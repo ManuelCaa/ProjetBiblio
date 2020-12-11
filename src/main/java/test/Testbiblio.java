@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 import model.*;
 import config.Context;
+import dao.jpa.DAOCompteJPA;
 
 public class Testbiblio {
-	/*
-	static Compte connected=null;
+	
 	public static List<Compte> comptes=new ArrayList<Compte>();
 
 	public static int saisieInt(String msg) 
@@ -36,29 +36,74 @@ public class Testbiblio {
 		return sc.nextLine();
 	}
 
-	/*private static void menuAcceuil() {
+	static Compte connected=null;
+	private static void menuAcceuil() {
 
-		System.out.println("Application Biblio");
-		String pseudo=saisieString("Saisir votre pseudo(nom)");
-		String password=saisieString("Saisir votre password");
-
-		connected=Compte.checkConnect(pseudo,password);
-
-		if(connected instanceof Utilisateur) 
-		{
-			menu();
-		}
-		else if(connected instanceof Admin) 
-		{
-			menuAdmin();
-		}
-		else 
-		{
-			System.out.println("Mauvais identifiants");
+		int choix = saisieInt("Application Bibliotheque\n1: Se connecter\n2: Créer un Compte");
+		switch(choix) {
+		case 1:
+			String pseudo= saisieString("Pseudo:");
+			String password=saisieString("Password:");
+			
+			connected=DAOCompteJPA.checkConnect(pseudo,password); 
+			System.out.println(connected);
+			
+			if(connected instanceof Utilisateur) 
+			{
+				menuUtilisateur();
+				
+			}
+			else if(connected instanceof Admin) 
+			{
+				menuAdmin();
+			
+			}
+			else 
+			{
+				System.out.println("Mauvais identifiants");
+				menuAcceuil();
+			}
+			break;
+		case 2:	creacompte();
+		break;
+		default: 
+			System.out.println("Mauvais choix");
 			menuAcceuil();
+			break;
 		}
-	}*/
-/*
+
+	}
+	private static void creacompte() {
+
+		int choix = saisieInt("1 : Administrateur\n"
+				+ "2 : Utilisateur");
+		switch(choix) {
+		case 1:
+			Admin anew=new Admin();
+			String pseudo=saisieString("Entrer un pseudo");
+			String pass=saisieString("Entrer un password");
+			String mail=saisieString("Entrer votre mail");
+
+			anew.setPseudo(pseudo);
+			anew.setMail(pass);
+			anew.setPassword(mail);
+			Context.getInstance().getDaoAdmin().update(anew);break;
+			
+		case 2:
+			Utilisateur unew=new Utilisateur();
+			String pseudou=saisieString("Entrer un pseudo");
+			String passu=saisieString("Entrer un password");
+			String mailu=saisieString("Entrer votre mail");
+
+			unew.setPseudo(pseudou);
+			unew.setMail(passu);
+			unew.setPassword(mailu);
+			Context.getInstance().getDaoUtilisateur().update(unew);break;
+		}
+		menuAcceuil();
+	}
+	
+
 	private static void menuAdmin() {
 		System.out.println("Bienvenue dans le menu Admin");
 		System.out.println("Choix du menu :");
@@ -162,7 +207,7 @@ public class Testbiblio {
 		Context.getInstance().getDaoOeuvre().update(o);
 	}
 	}
-	private static void menu() {
+	private static void menuUtilisateur() {
 		System.out.println("Bienvenue dans votre biblio");
 		System.out.println("Choix du menu :");
 		System.out.println("1 - Voir ma bibliotheque");

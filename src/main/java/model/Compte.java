@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 @Entity
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type_compte")
-public class Compte {
+public abstract class Compte {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
