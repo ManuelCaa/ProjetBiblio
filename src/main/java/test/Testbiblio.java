@@ -79,7 +79,8 @@ public static void remplissageBase() {
 	static Compte connected=null;
 
 	private static void menuAcceuil() {
-		System.out.println("Acceuil");
+		System.out.println("------------------------------------------------");
+		System.out.println("Accueil");
 		int choix = saisieInt("Application Bibliotheque\n1: Se connecter\n2: Créer un Compte");
 		switch(choix) {
 		case 1:
@@ -119,6 +120,7 @@ public static void remplissageBase() {
 	}
 
 	private static void creacompte() {
+		System.out.println("------------------------------------------------");
 		System.out.println("Creation du Compte");
 		int choix = saisieInt("1 : Administrateur\n"
 				+ "2 : Utilisateur");
@@ -130,12 +132,10 @@ public static void remplissageBase() {
 			String pass=saisieString("Entrer un password");
 			String mail=saisieString("Entrer votre mail");
 
-			String nom=saisieString("Entrer un nom pour votre biblio");
 
 			anew.setPseudo(pseudo);
 			anew.setMail(mail);
 			anew.setPassword(pass);
-			bnew.setNom(nom);
 			
 			Context.getInstance().getDaoBibliotheque().insert(bnew);
 
@@ -166,26 +166,42 @@ public static void remplissageBase() {
 
 
 	private static void menuAdmin() {
-		
-		System.out.println("Bienvenue dans le menu Admin");
-		System.out.println("Choix du menu :");
-		System.out.println("1 - Voir ma bibliotheque");
-		System.out.println("2 - Gestion de ma bibliotheque");
-		System.out.println("3 - Gerer la base de donnees de l'application");//ajout ou supprime une oeuvre
-		System.out.println("4 - Voir toutes les oeuvres");
-		System.out.println("5 - Gestion ma liste Following");
-		System.out.println("6 - Gestion ma liste Followers");
-		System.out.println("7 - Deconnect");
-		int choix = saisieInt("");
-		switch(choix) 
-		{
-		case 1:showBiblio();break;
-		case 2:gestionMabiblio();break;
-		case 3:gestionBaseD();break;
-		//case 4:showOeuvre();break;
-		case 5:gestionFollowing();break;
-		case 6:gestionFollowers();break;
-		case 7:System.exit(0);break;
+		System.out.println("------------------------------------------------");
+		if(connected.getBiblio()==null) {
+			
+			System.out.println("Bienvenue dans le menu Admin");
+			System.out.println("Vous n'avez pas encore une bibliotheque");
+			System.out.println("1 - Creer une bibliotheque");
+			System.out.println("2 - Gestion de mon compte");
+			System.out.println("3 - Me deconnecter");
+			int choix2 = saisieInt("");
+			switch(choix2) {
+			case 1 : creeBiblio();break;
+			case 2 : break;
+			case 3 : System.exit(0); break;
+			}
+		} else {
+
+			System.out.println("Bienvenue dans le menu Admin");
+			System.out.println("Choix du menu :");
+			System.out.println("1 - Voir ma bibliotheque");
+			System.out.println("2 - Gestion de ma bibliotheque");
+			System.out.println("3 - Gerer la base de donnees de l'application");//ajout ou supprime une oeuvre
+			System.out.println("4 - Voir toutes les oeuvres");
+			System.out.println("5 - Gestion ma liste Following");
+			System.out.println("6 - Gestion ma liste Followers");
+			System.out.println("7 - Deconnect");
+			int choix = saisieInt("");
+			switch(choix) 
+			{
+			case 1:showBiblio(connected.getBiblio());break;
+			case 2:gestionMabiblio();break;
+			case 3:gestionBaseD();break;
+			case 4:showOeuvre();break;
+			case 5:gestionFollowing();break;
+			case 6:gestionFollowers();break;
+			case 7:System.exit(0);break;
+			}
 		}
 		menuAdmin();
 	}
@@ -225,8 +241,8 @@ public static void remplissageBase() {
 		};
 		break;
 		case 2: int id = saisieInt("id following a supprimer");
-		Suivi s = connected.getFollowing().get(id);
-		Context.getInstance().getDaoSuivi().delete(s);
+		
+		Context.getInstance().getDaoSuivi().deleteById(id);
 		break;
 		case 3:	if(connected instanceof Utilisateur) 
 		{
@@ -256,9 +272,9 @@ public static void remplissageBase() {
 			if(u.isAccepte()==true) System.out.println(u.getFollowing());
 		};
 		break;
-		case 2: int id = saisieInt("id follower a supprimer");
-		Suivi s = connected.getFollowers().get(id);
-		Context.getInstance().getDaoSuivi().delete(s);
+		case 2: int id = saisieInt("id du suivi follower a supprimer");
+		
+		Context.getInstance().getDaoSuivi().deleteById(id);
 		break;
 		case 3 : demandeFollow(); break;
 		case 4:	if(connected instanceof Utilisateur) 
@@ -277,7 +293,10 @@ public static void remplissageBase() {
 	}
 
 	public static void demandeFollow() {
-		for(Suivi s: connected.getFollowers()) {
+		Suivi s;
+		for(int i = 0; i<=connected.getFollowers().size();i++)
+		 {
+			s=connected.getFollowers().get(i);
 			if(s.isAccepte()==false) {
 				System.out.println(s);
 				int choix = saisieInt("1: approuver cette demande\n2: Refuser cette demande\n");
@@ -374,33 +393,29 @@ public static void remplissageBase() {
 
 			System.out.println("Votre biblio");
 			System.out.println("Bibliotheque [id=" + b.getId() + ", nom=" + b.getNom() + ", compte=" + b.getCompte() + ", visibilite=" + b.getVisibilite()
-			+ ", fiches=" + b.getFiches() +"]");
-
+			+"]");
+			if(connected.getBiblio().getFiches().isEmpty()) 
+			{
+				System.out.println("Votre Bibliotheque ne contient de fiches");
+			}
+			else {
+				for(Fiche f : connected.getBiblio().getFiches()) 
+				{System.out.println(f.getOeuvre().getTitre());}
+			}
 		}else {
 			System.out.println("Vous n'avez pas encore cree une biblio");
 		}
 	}
-	/*private static void creeBiblio() {
+	private static void creeBiblio() {
 		String nom = saisieString("Nom de la bibliotheque");
 		String v;
 		v=saisieString("Visibilite: Public, Prive ou Followers");
 		Bibliotheque b = new Bibliotheque(Visibilite.valueOf(v), nom);
+		connected.setBiblio(b);
 		Context.getInstance().getDaoBibliotheque().insert(b);
-	}*/
-	private static void showBiblio() {
-System.out.println("Votre biblio contient :");
+		connected=Context.getInstance().getDaoCompte().update(connected);
 		
-		if(connected.getBiblio().getFiches().isEmpty()) 
-		{
-			System.out.println("Votre Bibliotheque est vide");
-		}
-		
-		for(Fiche f : connected.getBiblio().getFiches()) 
-		{
-			System.out.println(f.getOeuvre().getTitre());
-		}
-		
-		}
+	}
 
 		private static void gestionMabiblio() {
 
@@ -469,11 +484,10 @@ System.out.println("Votre biblio contient :");
 	}
 
 	private static void deleteOeuvreB() {
+		
 		for(Fiche f : connected.getBiblio().getFiches()) {
 			System.out.println(f.getId()+"--"+f.getOeuvre().getTitre());
 		}
-		
-		
 		
 		int choix=saisieInt("Choisir une oeuvre dans votre biblio a supprimer");
 
@@ -625,7 +639,7 @@ System.out.println("Votre biblio contient :");
 
 
 	public static void main(String[] args) {
-		remplissageBase();
+		//remplissageBase();
 		Context.getInstance();
 		//remplissageBase();
 		menuAcceuil();
