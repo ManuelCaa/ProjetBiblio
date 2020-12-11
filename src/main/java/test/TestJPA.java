@@ -17,6 +17,8 @@ import model.Admin;
 import model.*;
 
 public class TestJPA {
+	
+	static Compte connected=null;
 
 	public static int saisieInt(String msg) 
 	{
@@ -82,8 +84,59 @@ public class TestJPA {
 		
 	}
 	
+	private static void menuAcceuil() {
+		
+			int choix = saisieInt("Application Bibliotheque\n1: Se connecter\n2: Créer un Compte");
+			switch(choix) {
+				case 1:
+					String pseudo= saisieString("Pseudo:");
+					String password=saisieString("Password:");
+					connected=Compte.checkConnect(pseudo,password); //faire la fonction checkConnect
+					if(connected instanceof Utilisateur) 
+					{
+						//menuUtilisateur();
+					}
+					else if(connected instanceof Admin) 
+					{
+						//menuAdmin();
+					}
+					else 
+					{
+						System.out.println("Mauvais identifiants");
+						menuAcceuil();
+					}
+					break;
+				case 2:	//demande s'il veut creer un compte admin ou utilisateur
+					break;
+				default: 
+						System.out.println("Mauvais choix");
+						menuAcceuil();
+						break;
+			}
+		
+		}
+	private static void menuUtilisateur() {
+		System.out.println("Bienvenue dans votre bibliotheque");
+		System.out.println("Choix du menu :");
+		System.out.println("1 - Voir ma bibliotheque");
+		System.out.println("2 - Gestion de ma bibliotheque");
+		System.out.println("3 - Voir les oeuvres");
+		System.out.println("4 - Mes amis");
+		System.out.println("5 - Mes Followers");
+		System.out.println("6 - Se Deconnecter");
+		int choix = saisieInt("");
+		switch(choix) 
+		{
+		case 1:showBiblio();break;
+		case 2:gestionMabiblio();break;
+		case 3:showOeuvre();break;
+		//case 4:gestionMesAmis();break;
+		//case 5:gestionFollowers();break;
+		case 6:System.exit(0);break;
+		}
 
-
+		menu();
+	}
 	public static void main(String[] args) {
 		
 	
@@ -103,6 +156,7 @@ public class TestJPA {
 		
 		remplissageBase();
 		
+
 		
 		Context.getInstance().closeEmf();
 	}
