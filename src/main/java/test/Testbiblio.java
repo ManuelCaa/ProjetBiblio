@@ -1,17 +1,18 @@
 package test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import model.*;
+import com.google.protobuf.StringValue;
+
 import config.Context;
 import dao.jpa.DAOCompteJPA;
+import model.*;
 
 public class Testbiblio {
-	
+
 	public static List<Compte> comptes=new ArrayList<Compte>();
 
 	public static int saisieInt(String msg) 
@@ -36,31 +37,79 @@ public class Testbiblio {
 		return sc.nextLine();
 	}
 
-	static Compte connected=null;
-	private static void menuAcceuil() {
+	public static void remplissageBase() {
 
+		Bibliotheque b1 =new Bibliotheque();			
+		Bibliotheque b2 =new Bibliotheque();
+
+		Admin a = new Admin("admin@gmail,com","123456","admin",b1);
+		Admin a1=new Admin("admin1@gmail.com","toto","admin1",b2);
+
+		Utilisateur u1 = new Utilisateur("hajar@gmail.com", "1234567", "hajars", b1);
+		Utilisateur u2 = new Utilisateur("toto@gmail.com", "totol", "u2", b2);
+
+		/*Oeuvre o1=new Oeuvre("Harry Potter et la coupe de feu","quatrieme annee au college de Poudlard","HPCF",
+					2000,"Gallimard",LocalDate.parse("2018-11-05"), LocalDate.parse("2019-12-04"),true);
+
+			Oeuvre o2=new Oeuvre("Harry Potter e l'ecole des sorciers","premiere annee au college de Poudlard","HPES",
+					1998,"Gallimard",LocalDate.parse("2012-05-08"),LocalDate.parse("2019-12-04"),true);
+		 */
+		Album al1 = new Album("Album1","album1 sur scene","FIAL1",2005, "Universal",LocalDate.parse("2014-08-08"),LocalDate.parse("2018-05-04"),true,12,"M");
+		Album al2 = new Album("Album2","album2 compil","FIAL2",2007,"Universal",LocalDate.parse("2017-06-12"),LocalDate.parse("2019-05-06"),true,14,"Goya");
+
+		Livre l1=new Livre("Harry Potter a l'ecole des sorciers","premiere annee au college de Poudlard","HPES",
+				1998,"Gallimard",LocalDate.parse("2012-05-08"),LocalDate.parse("2019-12-04"),true,15,"Rowling");
+
+		Livre l2= new Livre("Harry Potter et le prisionner d'Azkaban","troisieme annee au college de Poudlard","HPPA",
+				1999,"Gallimard",LocalDate.parse("2014-09-08"),LocalDate.parse("2019-12-04"),true,18,"Rowling");
+
+		Context.getInstance().getDaoBibliotheque().insert(b1);
+		Context.getInstance().getDaoBibliotheque().insert(b2);
+		Context.getInstance().getDaoAdmin().insert(a);
+		Context.getInstance().getDaoAdmin().insert(a1);
+		Context.getInstance().getDaoUtilisateur().insert(u1);
+		Context.getInstance().getDaoUtilisateur().insert(u2);
+
+
+		Context.getInstance().getDaoAlbum().insert(al1);
+		Context.getInstance().getDaoAlbum().insert(al2);
+		Context.getInstance().getDaoLivre().insert(l1);
+		Context.getInstance().getDaoLivre().insert(l2);
+
+		//Context.getInstance().getDaoAdmin().update(a).setMail("admin2@gmail.com");
+
+	}
+
+
+	static Compte connected=null;
+
+	private static void menuAcceuil() {
+		System.out.println("------------------------------------------------");
 		int choix = saisieInt("Application Bibliotheque\n1: Se connecter\n2: Créer un Compte");
 		switch(choix) {
 		case 1:
 			String pseudo= saisieString("Pseudo:");
 			String password=saisieString("Password:");
-			
-			connected=DAOCompteJPA.checkConnect(pseudo,password); 
-			System.out.println(connected);
-			
+			try{
+
+				connected=DAOCompteJPA.checkConnect(pseudo,password); 
+				System.out.println(connected);
+			}catch(Exception e) {
+				System.out.println("Mauvais identifiants");
+			}
+
 			if(connected instanceof Utilisateur) 
 			{
 				menuUtilisateur();
-				
+
 			}
 			else if(connected instanceof Admin) 
 			{
 				menuAdmin();
-			
+
 			}
 			else 
 			{
-				System.out.println("Mauvais identifiants");
 				menuAcceuil();
 			}
 			break;
@@ -73,8 +122,9 @@ public class Testbiblio {
 		}
 
 	}
-	private static void creacompte() {
 
+	private static void creacompte() {
+		System.out.println("------------------------------------------------");
 		int choix = saisieInt("1 : Administrateur\n"
 				+ "2 : Utilisateur");
 		switch(choix) {
@@ -85,16 +135,16 @@ public class Testbiblio {
 			String pass=saisieString("Entrer un password");
 			String mail=saisieString("Entrer votre mail");
 
-			String nom=saisieString("Entrer un nom pour votre biblio");
+			//String nom=saisieString("Entrer un nom pour votre biblio");
 
-			
+
 			anew.setPseudo(pseudo);
 			anew.setMail(mail);
 			anew.setPassword(pass);
-			bnew.setNom(nom);
+			//bnew.setNom(nom);
 			Context.getInstance().getDaoBibliotheque().insert(bnew);
 
-			anew.setBiblio(bnew);
+			//anew.setBiblio(bnew);
 			Context.getInstance().getDaoAdmin().insert(anew);break;
 
 		case 2:
@@ -105,8 +155,8 @@ public class Testbiblio {
 			String mailu=saisieString("Entrer votre mail");
 
 			String nomu=saisieString("Entrer un nom pour votre biblio");
-			
-			
+
+
 			unew.setPseudo(pseudou);
 			unew.setMail(mailu);
 			unew.setPassword(passu);
@@ -118,30 +168,46 @@ public class Testbiblio {
 		}
 		menuAcceuil();
 	}
-	
+
 
 	private static void menuAdmin() {
-		System.out.println("Bienvenue dans le menu Admin");
-		System.out.println("Choix du menu :");
-		System.out.println("1 - Voir ma bibliotheque");
-		System.out.println("2 - Gestion de ma bibliotheque");
-		System.out.println("3 - Gerer la base de donnees de l'application");//ajout ou supprime une oeuvre
-		System.out.println("4 - Voir toutes les oeuvres");
-		System.out.println("5 - Gestion ma liste Following");
-		System.out.println("6 - Gestion ma liste Followers");
-		System.out.println("7 - Deconnect");
-		int choix = saisieInt("");
-		switch(choix) 
-		{
-		//case 1:showBiblio();break;
-		//case 2:gestionMabiblio();break;
-		case 3:gestionBaseD();break;
-		//case 4:showOeuvre();break;
-		case 5:gestionFollowing();break;
-		case 6:gestionFollowers();break;
-		case 7:System.exit(0);break;
-		}
+		System.out.println("------------------------------------------------");
+		if(connected.getBiblio()==null) {
 
+			System.out.println("Bienvenue dans le menu Admin");
+			System.out.println("Vous n'avez pas encore une bibliotheque");
+			System.out.println("1 - Creer une bibliotheque");
+			System.out.println("2 - Gestion de mon compte");
+			System.out.println("3 - Me deconnecter");
+			int choix2 = saisieInt("");
+			switch(choix2) {
+			case 1 : creeBiblio();break;
+			case 2 : break;
+			case 3 : System.exit(0); break;
+			}
+		} else {
+
+			System.out.println("Bienvenue dans le menu Admin");
+			System.out.println("Choix du menu :");
+			System.out.println("1 - Voir ma bibliotheque");
+			System.out.println("2 - Gestion de ma bibliotheque");
+			System.out.println("3 - Gerer la base de donnees de l'application");//ajout ou supprime une oeuvre
+			System.out.println("4 - Voir toutes les oeuvres");
+			System.out.println("5 - Gestion ma liste Following");
+			System.out.println("6 - Gestion ma liste Followers");
+			System.out.println("7 - Deconnect");
+			int choix = saisieInt("");
+			switch(choix) 
+			{
+			case 1:showBiblio(connected.getBiblio());break;
+			case 2:gestionMabiblio();break;
+			case 3:gestionBaseD();break;
+			case 4:showOeuvre();break;
+			case 5:gestionFollowing();break;
+			case 6:gestionFollowers();break;
+			case 7:System.exit(0);break;
+			}
+		}
 		menuAdmin();
 	}
 
@@ -176,22 +242,22 @@ public class Testbiblio {
 		switch(choix) 
 		{
 		case 1:for(Suivi u : connected.getFollowing()) {
-					System.out.println(u.getFollower());
-				};
-				break;
+			System.out.println(u.getFollower());
+		};
+		break;
 		case 2: int id = saisieInt("id following a supprimer");
-				Suivi s = connected.getFollowing().get(id);
-				Context.getInstance().getDaoSuivi().delete(s);
-			break;
+		Suivi s = connected.getFollowing().get(id);
+		Context.getInstance().getDaoSuivi().delete(s);
+		break;
 		case 3:	if(connected instanceof Utilisateur) 
 		{
 			menuUtilisateur();
-			
+
 		}
 		else if(connected instanceof Admin) 
 		{
 			menuAdmin();
-		
+
 		};break;
 		}
 
@@ -208,29 +274,29 @@ public class Testbiblio {
 		switch(choix) 
 		{
 		case 1:for(Suivi u : connected.getFollowers()) {
-					if(u.isAccepte()==true) System.out.println(u.getFollowing());
-				};
-				break;
+			if(u.isAccepte()==true) System.out.println(u.getFollowing());
+		};
+		break;
 		case 2: int id = saisieInt("id follower a supprimer");
-				Suivi s = connected.getFollowers().get(id);
-				Context.getInstance().getDaoSuivi().delete(s);
-			break;
+		Suivi s = connected.getFollowers().get(id);
+		Context.getInstance().getDaoSuivi().delete(s);
+		break;
 		case 3 : demandeFollow(); break;
 		case 4:	if(connected instanceof Utilisateur) 
 		{
 			menuUtilisateur();
-			
+
 		}
 		else if(connected instanceof Admin) 
 		{
 			menuAdmin();
-		
+
 		};break;
 		}
 
 		gestionFollowers();
 	}
-	
+
 	public static void demandeFollow() {
 		for(Suivi s: connected.getFollowers()) {
 			if(s.isAccepte()==false) {
@@ -242,8 +308,6 @@ public class Testbiblio {
 		}
 	}
 	private static void validOeuvre() {
-		// TODO Auto-generated method stub
-		// validation en attente, des oeuvres proposees par les utilisateurs
 		System.out.println("La liste des oeuvres qui ne sont pas encore validées");
 		for(Oeuvre o : Context.getInstance().getDaoOeuvre().findAll()) {
 			if(o.isModerationEffectuee()==false) System.out.println(o);
@@ -254,7 +318,7 @@ public class Testbiblio {
 	}
 
 	private static void addOeuvre() {
-		
+
 		String titre=saisieString("Saisir le titre");
 		String descriptif=saisieString("Saisir descriptif");
 		String nomFichierImage=saisieString("Saisir image");
@@ -263,7 +327,7 @@ public class Testbiblio {
 		LocalDate creeA=LocalDate.now();
 		LocalDate modifieeA=LocalDate.now();
 		boolean moderationEffectuee= true;
-		
+
 		Oeuvre o = new Oeuvre(titre, descriptif, nomFichierImage, annee, editeur, creeA,modifieeA,true);
 		Context.getInstance().getDaoOeuvre().insert(o);
 
@@ -274,15 +338,15 @@ public class Testbiblio {
 			System.out.println(o);
 		}
 		int choix=saisieInt("Choisir l'id de l'oeuvre a supprimer de la base de donnee");
-		
+
 		Context.getInstance().getDaoOeuvre().deleteById(choix);
 
-		
+
 	}
 
 	private static void updateOeuvre() {
-		//showOeuvre();
-	
+		showOeuvre();
+
 		int choix=saisieInt("Choisir une Oeuvre (id)");
 		Oeuvre o = Context.getInstance().getDaoOeuvre().findById(choix);
 		if(o==null) {System.out.println("Aucune Oeuvre avec ce numero");}
@@ -299,7 +363,7 @@ public class Testbiblio {
 			LocalDate modifieeA=LocalDate.now();o.setModifieeA(modifieeA);
 			Context.getInstance().getDaoOeuvre().update(o);
 		}
-		
+
 	}
 	private static void menuUtilisateur() {
 		System.out.println("Bienvenue dans votre biblio");
@@ -313,11 +377,11 @@ public class Testbiblio {
 		int choix = saisieInt("");
 		switch(choix) 
 		{
-		//case 1:showBiblio();break;
-		//case 2:gestionMabiblio();break;
-		//case 3:showOeuvre();break;
-		//case 4:gestionMesAmis();break;
-		//case 5:gestionFollowers();break;
+		case 1:showBiblio(connected.getBiblio());break;
+		case 2:gestionMabiblio();break;
+		case 3:showOeuvre();break;
+		case 4:gestionFollowing();break;
+		case 5:gestionFollowers();break;
 		case 6:System.exit(0);break;
 		}
 
@@ -325,15 +389,25 @@ public class Testbiblio {
 	}
 
 
-	private static void showBiblio() {
-		System.out.println("Votre biblio");
-		Bibliotheque b =Context.getInstance().getDaoBibliotheque().selectByIdCompte(connected.getId());
-		
+	private static void showBiblio(Bibliotheque b) {
+		if(b!=null) {
 
-			System.out.println(b.getFiches());
+			System.out.println("Votre biblio");
+			System.out.println("Bibliotheque [id=" + b.getId() + ", nom=" + b.getNom() + ", compte=" + b.getCompte() + ", visibilite=" + b.getVisibilite()
+			+ ", fiches=" + b.getFiches() +"]");
+
+		}else {
+			System.out.println("Vous n'avez pas encore cree une biblio");
 		}
-
-	/*	private static void gestionMabiblio() {
+	}
+	private static void creeBiblio() {
+		String nom = saisieString("Nom de la bibliotheque");
+		String v;
+		v=saisieString("Visibilite: Public, Prive ou Followers");
+		Bibliotheque b = new Bibliotheque(Visibilite.valueOf(v), nom);
+		Context.getInstance().getDaoBibliotheque().insert(b);
+	}
+	private static void gestionMabiblio() {
 		System.out.println("Gestion de votre biblio");
 		System.out.println("Choix du menu :");
 		System.out.println("1 - Ajouter une oeuvre a ma biblio");
@@ -344,26 +418,28 @@ public class Testbiblio {
 		int choix = saisieInt("");
 		switch(choix) 
 		{
-		
+
 		case 1:addOeuvreB();break;
 		case 2:deleteOeuvreB();break;
 		case 3:updateOeuvreFiche();break;
-		//case 4:propoOeuvre();break;
+		case 4:propoOeuvre();break;
 		case 5:	if(connected instanceof Utilisateur) 
 		{
 			menuUtilisateur();
-			
+
 		}
 		else if(connected instanceof Admin) 
 		{
 			menuAdmin();
-		
+
 		};break;
 		}
 
 		menuUtilisateur();
-		
+
 	}
+
+
 	private static void showOeuvre() {
 		for(Oeuvre o : Context.getInstance().getDaoOeuvre().findAll()) {
 			if(o.isModerationEffectuee()==true) System.out.println(o);
@@ -372,12 +448,12 @@ public class Testbiblio {
 
 	private static void addOeuvreB() {
 		//showOeuvre();
-		
+
 		int choix=saisieInt("Choisir une oeuvre pour votre biblio (id)");
-		
+
 		Oeuvre e= Context.getInstance().getDaoOeuvre().findById(choix);
 		Bibliotheque b =Context.getInstance().getDaoBibliotheque().selectByIdCompte(connected.getId());
-		
+
 		Fiche f = new Fiche();
 		int note=saisieInt("Entrer une note");
 		double duree=saisieInt("Entrer une duree");
@@ -388,8 +464,8 @@ public class Testbiblio {
 		f.setDuree(duree);
 		f.setNote(note);
 		f.setPretee(pret);
-		
-		
+
+
 		Context.getInstance().getDaoFiche().insert(f);
 	}
 
@@ -398,43 +474,43 @@ public class Testbiblio {
 			System.out.println(f);
 		}
 		int choix=saisieInt("Choisir une oeuvre dans votre biblio a supprimer");
-		Context.getInstance().getDaoBibliotheque().delete(choix);
+		Context.getInstance().getDaoBibliotheque().deleteById(choix);
 
 	}
 
 	private static void updateOeuvreFiche() {
 		for(Fiche fi : Context.getInstance().getDaoFiche().findAll()) {
 			System.out.println(fi);
-		
-		int choix=saisieInt("Choisir une Fiche");
-		Fiche f = Context.getInstance().getDaoFiche().findById(choix);
-		if(f==null) {System.out.println("Aucune Fiche avec ce numero");}
-		else 
-		{
-			int note=saisieInt("Mettre une note /10");
-			String pret=saisieString("Saisir le nom ou le pseudo � qui vous l'avez pret�");
-			Integer lu = (saisieString("Avez vous Vu cette oeuvre ? (Y/N)").equalsIgnoreCase("Y"))? saisieInt("Combien de fois?") : null;
-			String avis=saisieString("Saisir votre avis (bien, top, nul, bouse, moyen");
-			Double duree=saisieDouble("Saisir la dur�e(jour)");
 
-			f.setNote(note);
-			f.setPretee(pret);
-			f.setLu(lu);
-			f.setAvis(avis);
-			f.setDuree(duree);
+			int choix=saisieInt("Choisir une Fiche");
+			Fiche f = Context.getInstance().getDaoFiche().findById(choix);
+			if(f==null) {System.out.println("Aucune Fiche avec ce numero");}
+			else 
+			{
+				int note=saisieInt("Mettre une note /10");
+				String pret=saisieString("Saisir le nom ou le pseudo � qui vous l'avez pret�");
+				Integer lu = (saisieString("Avez vous Vu cette oeuvre ? (Y/N)").equalsIgnoreCase("Y"))? saisieInt("Combien de fois?") : null;
+				String avis=saisieString("Saisir votre avis (bien, top, nul, bouse, moyen");
+				Double duree=saisieDouble("Saisir la dur�e(jour)");
 
-			Context.getInstance().getDaoFiche().update(f);
-		}}}
+				f.setNote(note);
+				f.setPretee(pret);
+				f.setLu(lu);
+				f.setAvis(avis);
+				f.setDuree(duree);
 
-	/*private static void propoOeuvre() {
+				Context.getInstance().getDaoFiche().update(f);
+			}}}
+
+	private static void propoOeuvre() {
 		//a voir plus tard
 	}
-
+	/*
 	private static void gestionMesAmis() {
 
 		System.out.println("Gerer mes amis");
 
-		for(Suivi s : Context.getInstance().getDAOSuiviJDBC().SelectAll()) {
+		for(Suivi s : Context.getInstance().getDAOSuivi().SelectAll()) {
 			System.out.println(s);
 		}
 
@@ -457,9 +533,10 @@ public class Testbiblio {
 
 		}
 	}
-
+	 */
+	/*
 	private static void addAmis() {
-		Suivi utilisateurSuivi=saisieString("Saisir le pseudo");
+		String utilisateurSuivi=saisieString("Saisir le pseudo");
 		// demande d'amis
 		//Si Non => rien
 		//Si OUI
@@ -522,9 +599,10 @@ public class Testbiblio {
 	}*/
 
 	public static void main(String[] args) {
+		remplissageBase();
 		Context.getInstance();
 		menuAcceuil();
-	
+
 		Context.getInstance().closeEmf();
 	}
 }
