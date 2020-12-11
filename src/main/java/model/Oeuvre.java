@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type_oeuvre")
-public abstract class Oeuvre {
+public class Oeuvre {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
